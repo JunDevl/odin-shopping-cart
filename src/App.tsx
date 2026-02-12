@@ -1,14 +1,9 @@
-import { useState } from 'react'
-import type { CartItem } from './types'
+import HomePage from './ui/pages/HomePage'
 
 function App() {
-  const [cart, setCart] = useState<CartItem[]>([])
-
-  
-
   return (
     <>
-      <p>a</p>
+      <HomePage />
     </>
   )
 }
