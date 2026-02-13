@@ -1,21 +1,29 @@
 import type { RouteObject } from "react-router";
-import App from './App.tsx'
-import CartPage from "./ui/pages/CartPage.tsx";
-import ShopPage from "./ui/pages/ShopPage.tsx";
+import { Navigate } from "react-router";
+import App from './App.tsx';
+import Cart from "./ui/pages/Cart.tsx";
+import Shop from "./ui/pages/Shop.tsx";
 
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <App />
+    element: <App />,
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/shop" replace />
+      },
+      {
+        path: "cart",
+        element: <Cart />
+      },
+      {
+        path: "shop",
+        element: <Shop />,
+        errorElement: <p>error</p>
+      }
+    ]
   },
-  {
-    path: "cart",
-    element: <CartPage />
-  },
-  {
-    path: "shop",
-    element: <ShopPage />
-  }
 ]
 
 export default routes
