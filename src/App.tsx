@@ -1,19 +1,35 @@
 import { Outlet } from 'react-router';
 import type { CartItem, FakestoreAPIResponse } from "./types"
-import { useEffect, useRef, useState } from 'react';
+import { use, useState } from 'react';
+import { fetchData } from './api';
 import "./App.css"
 
+const promiseCache = new Map<string, Promise<unknown>>();
+
+const useQuery = <T,>({
+  fn,
+  key
+}: {
+  fn: () => Promise<T>,
+  key: string
+}) => {
+  if (!promiseCache.has(key)) {
+    promiseCache.set(key, fn());
+  }
+
+  const promise = promiseCache.get(key) as Promise<T>;
+
+  const result = use(promise);
+
+  return result;
+}
+
 const App = () => {
-  // i will absolutely handle all fake data fetching in one go, the response just gives an array of 20 items. Implementing lazy-loading takes time, guys :)
-  const [SHOP_ITEMS, SET_SHOP_ITEMS] = useState<FakestoreAPIResponse[]>();
-
+  const shopItems = useQuery<FakestoreAPIResponse>({
+    fn: () => fetchData('https://fakestoreapi.com/products'), 
+    key: "shop"
+  })
   const [cart, setCart] = useState<CartItem[]>([])
-
-  useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
-      .then(res => res.json())
-      .then(obj => SET_SHOP_ITEMS(obj))
-  }, [])
 
   return (
     <>
@@ -25,7 +41,7 @@ const App = () => {
       <div className="hero">Hero exe</div>
 
       <Outlet context={{
-        SHOP_ITEMS,
+        shopItems,
         cartState: [cart, setCart]
       }}/>
     </>

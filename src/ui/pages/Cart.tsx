@@ -13,7 +13,11 @@ const Cart = (props: Props) => {
   return (
     <main className="cart">
       <ul className="list">
-        
+        {cart.length > 0 && 
+        cart.map(item => 
+          <li>{item.title}</li>
+        )
+        }
       </ul>
     </main>
   )
