@@ -11,14 +11,20 @@
   flex-direction: column;
   justify-content: end;
   align-items: center;
+  background-color: var(--primary-color);
+  padding: 2rem 1rem;
+  border-radius: 10px;
 
   &>.img {
-    flex: 0 1 auto;
-  }
+    align-self: stretch;
+    flex: 1;
 
-  & img {
-    height: 100%;
-    object-fit: cover;
+    &>img {
+      aspect-ratio: 1/1;
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
   }
 
   &>p {
@@ -27,5 +33,11 @@
     line-clamp: 1;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
+  }
+
+  &>.buy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

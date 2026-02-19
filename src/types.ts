@@ -8,7 +8,7 @@ type FakestoreAPIResponse = {
   title: string
 }
 
-type CartItem = Omit<FakestoreAPIResponse, "category" | "id"> & { quantity: number }
+type CartItem = Omit<FakestoreAPIResponse, "category"> & { quantity: number }
 
 type Prettify<T> = {
   [K in keyof T]: T[K];
