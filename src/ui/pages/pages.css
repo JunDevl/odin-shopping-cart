@@ -1,0 +1,31 @@
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.card {
+  width: 20rem;
+  height: 25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+
+  &>.img {
+    flex: 0 1 auto;
+  }
+
+  & img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &>p {
+    overflow: hidden;
+    display: -webkit-box;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
+}

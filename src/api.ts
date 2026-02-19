@@ -3,7 +3,7 @@ export const fetchData = async (url: string) => {
     const res = await fetch(url);
     const json = await res.json();
 
-    return json;
+    return json
   } catch (error) {
     console.log(error);
     return;

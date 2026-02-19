@@ -4,15 +4,15 @@
   --primary-light: oklch(from var(--primary-color) 88% c h);
   --primary-lighter: oklch(from var(--primary-color) 94% c h);
 
-  --primary-dark: oklch(from var(--primary-color) 70% c h);
-  --primary-darker: oklch(from var(--primary-color) 60% c h);
+  --primary-dark: oklch(from var(--primary-color) 70% 0.1 h);
+  --primary-darker: oklch(from var(--primary-color) 60% 0.025 h);
 
   --white-1: oklch(from var(--primary-color) 99% 0.025 h);
   --white-2: oklch(from var(--primary-color) 98% 0.025 h);
 
-  --black-1: oklch(from var(--primary-color) 5% 0.025 h);
-  --black-2: oklch(from var(--primary-color) 10% 0.025 h);
-  --black-3: oklch(from var(--primary-color) 18% 0.025 h);
+  --black-1: oklch(from var(--primary-color) 6% 0.025 h);
+  --black-2: oklch(from var(--primary-color) 12% 0.025 h);
+  --black-3: oklch(from var(--primary-color) 20% 0.025 h);
 
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -26,6 +26,17 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+  padding: 0;
 }
 
 a {

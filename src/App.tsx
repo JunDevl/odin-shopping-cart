@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router';
+import { Outlet, Link } from 'react-router';
 import type { CartItem, FakestoreAPIResponse } from "./types"
 import { use, useState } from 'react';
 import { fetchData } from './api';
@@ -33,17 +33,40 @@ const App = () => {
 
   return (
     <>
-      <header className="search">
-        <label htmlFor="search">Search:</label>
-        <input type="text" id="search" name="search"/>
+      <header>
+        <div className="search">
+          <label htmlFor="search" className="search-icon">search ico</label> 
+          <input type="text" id="search" name="search"/>
+        </div>
+        <div className="tabs">
+          <Link to="cart" className="cart-icon">
+            cart icon
+            <span className="size">{
+              cart.length > 0 ? 
+              cart.map(item => item.quantity).reduce((prev, cur) => prev + cur) : 
+              0
+            }</span>
+          </Link>
+          <Link to="shop" className="shop-icon">shop icon</Link>
+        </div>
       </header>
       
-      <div className="hero">Hero exe</div>
-
-      <Outlet context={{
-        shopItems,
-        cartState: [cart, setCart]
-      }}/>
+      <section>
+        <div className="filter">
+          Order by:
+          <select>
+            <option value="name">Name (A-Z)</option>
+            <option value="price">Price</option>
+            <option value="category">Category (A-Z)</option>
+            <option value="rating">Most rated</option>
+            <option value="purchase">Most purchased</option>
+          </select>
+        </div>
+        <Outlet context={{
+          shopItems,
+          cartState: [cart, setCart]
+        }}/>
+      </section>
     </>
   )
 }

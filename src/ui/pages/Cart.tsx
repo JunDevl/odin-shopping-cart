@@ -3,9 +3,7 @@ import "./pages.css"
 
 import type { CartItem } from "../../types";
 
-type Props = {}
-
-const Cart = (props: Props) => {
+const Cart = () => {
   const {cartState} = useOutletContext<Record<string, any>>()
 
   const [cart, setCart] = cartState as [CartItem[], React.Dispatch<React.SetStateAction<CartItem[]>>]
@@ -13,11 +11,9 @@ const Cart = (props: Props) => {
   return (
     <main className="cart">
       <ul className="list">
-        {cart.length > 0 && 
-        cart.map(item => 
+        {cart.length > 0 && cart.map(item => 
           <li>{item.title}</li>
-        )
-        }
+        )}
       </ul>
     </main>
   )
