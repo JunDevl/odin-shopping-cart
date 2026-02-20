@@ -1,59 +1,59 @@
 import { useOutletContext } from "react-router";
 import { Suspense, useEffect, useState } from "react";
+import { formatCurrency } from "../../utils";
 import "./pages.css";
 
 import type { FakestoreAPIResponse, CartItem } from "../../types";
 
 const Shop = () => {
   const {shopItems, cartState} = useOutletContext<Record<string, any>>()
-  const setCart = cartState[1] as React.Dispatch<React.SetStateAction<CartItem[]>>
+  const [cart, setCart] = cartState as [CartItem[], React.Dispatch<React.SetStateAction<CartItem[]>>]
 
   const [productsWithInterest, setProductsWithInterest] = useState<Map<number, CartItem>>(new Map());
-
-  useEffect(() => console.log(productsWithInterest), [productsWithInterest]);
 
   return (
     <main className="shop">
       <ul className="cards">
         <Suspense fallback={<div>Loading...</div>}>
           {(shopItems as FakestoreAPIResponse[]).map(item => 
-            <li className="card" key={item.id}>
+            <li className="card" key={item.id} tabIndex={1}>
               <div className="img">
                 <img src={item.image} alt="" />
               </div>
               <p className="title">{item.title}</p>
-              <p className="price">{
-                new Intl.NumberFormat(navigator.language, {
-                  style: "currency",
-                  currencyDisplay: "symbol",
-                  currency: "USD"
-                }).format(item.price)
-              }</p>
+              <p className="rating">{item.rating.rate}</p>
+              <p className="price">{formatCurrency(item.price)}</p>
               <div className="buy">
-                <input type="number" name="quantity" min={0} onInput={e => 
-                  setProductsWithInterest(prevState => {
-                    const {category, ...newItem} = item; // newItem is just item without the category property;
+                <input type="number" name="quantity" min={0} onInput={e => {
+                  const {category, ...newItem} = item; // newItem is just item without the category property;
                     
-                    const quantity = Number((e.target as HTMLInputElement).value);
-                    
-                    const productWithInterest = {quantity: isNaN(quantity) ? 0 : quantity, ...newItem};
-
-                    const newState = new Map(productsWithInterest);
-
-                    if (quantity > 0) {
-                      newState.set(item.id, productWithInterest);
-                      return newState;
-                    }
-
-                    newState.delete(item.id);
-
-                    return newState;
-                  })}
-                />
-                <button onClick={() => {
-                  const input = document.querySelector<HTMLInputElement>("div.buy>input");
+                  const quantity = Number((e.target as HTMLInputElement).value);
                   
-                  console.log(input?.value);
+                  const productWithInterest = {quantity: isNaN(quantity) ? 0 : quantity, ...newItem};
+
+                  const newProducts = new Map(productsWithInterest);
+
+                  if (quantity > 0) newProducts.set(item.id, productWithInterest);
+                  else newProducts.delete(item.id);
+
+                  setProductsWithInterest(newProducts)
+                }}
+                />
+                <button onClick={(e) => {
+                  const index = cart.findIndex(cart => cart.id === item.id);
+
+                  if (!productsWithInterest.has(item.id)) return cart;
+
+                  const cartItem = productsWithInterest.get(item.id)!;
+
+                  const newCart = [...cart];
+
+                  if (index >= 0) newCart[index].quantity += cartItem.quantity;
+                  else newCart.push({...cartItem});
+                  
+                  setCart(newCart);
+
+                  console.log(e);
                 }}>Add to Cart</button>
               </div>
             </li>

@@ -17,7 +17,9 @@ header {
 }
 
 main {
-  display: flex;
+  padding: 3rem 2rem;
+  flex: 1;
+  align-self: stretch;
 }
 
 .search {

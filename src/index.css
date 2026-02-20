@@ -28,15 +28,22 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+div,
+p,
+h1,
+h2,
+h3,
+h4,
+body,
+ul,
+ol,
 li {
-  list-style: none;
   margin: 0;
   padding: 0;
 }
 
-p {
-  margin: 0;
-  padding: 0;
+li {
+  list-style: none;
 }
 
 a {

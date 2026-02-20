@@ -1,7 +1,7 @@
 import { Outlet, Link } from 'react-router';
 import type { CartItem, FakestoreAPIResponse } from "./types"
-import { use, useState } from 'react';
-import { fetchData } from './api';
+import { use, useEffect, useState } from 'react';
+import { fetchData } from './utils';
 import "./App.css"
 
 const promiseCache = new Map<string, Promise<unknown>>();
@@ -62,6 +62,7 @@ const App = () => {
             <option value="purchase">Most purchased</option>
           </select>
         </div>
+
         <Outlet context={{
           shopItems,
           cartState: [cart, setCart]

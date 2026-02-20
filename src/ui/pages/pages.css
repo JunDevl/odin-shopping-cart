@@ -1,12 +1,14 @@
+ul {
+  width: 100%;
+}
+
 .cards {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   gap: 2rem;
 }
 
 .card {
-  width: 20rem;
-  height: 25rem;
   display: flex;
   flex-direction: column;
   justify-content: end;
@@ -36,8 +38,32 @@
   }
 
   &>.buy {
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: stretch;
+  gap: 2rem;
+  background-color: var(--primary-color);
+  border-radius: 10px;
+
+  &>li {
+    gap: inherit;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 5rem;
+
+    &>span {
+      display: flex;
+      flex-direction: start;
+      align-items: center;
+    }
   }
 }
