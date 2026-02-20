@@ -1,6 +1,6 @@
 import { Outlet, Link } from 'react-router';
-import type { CartItem, FakestoreAPIResponse } from "./types"
-import { use, useEffect, useState } from 'react';
+import type { CartItem, FakestoreAPIResponse, Sort } from "./types"
+import { use, useState } from 'react';
 import { fetchData } from './utils';
 import "./App.css"
 
@@ -29,8 +29,10 @@ const App = () => {
     fn: () => fetchData('https://fakestoreapi.com/products'), 
     key: "shop"
   })
-  const [cart, setCart] = useState<CartItem[]>([])
+  const [cart, setCart] = useState<CartItem[]>([]);
 
+  const [sort, setSort] = useState<Sort>("title");
+  
   return (
     <>
       <header>
@@ -54,18 +56,19 @@ const App = () => {
       <section>
         <div className="filter">
           Order by:
-          <select>
-            <option value="name">Name (A-Z)</option>
+          <select value={sort} onInput={e => setSort((e.target as HTMLSelectElement).value as Sort)}>
+            <option value="title">Title (A-Z)</option>
             <option value="price">Price</option>
             <option value="category">Category (A-Z)</option>
             <option value="rating">Most rated</option>
-            <option value="purchase">Most purchased</option>
+            <option value="purchases">Most purchased</option>
           </select>
         </div>
 
         <Outlet context={{
           shopItems,
-          cartState: [cart, setCart]
+          cartState: [cart, setCart],
+          sort
         }}/>
       </section>
     </>

@@ -1,4 +1,4 @@
-type FakestoreAPIResponse = {
+export type FakestoreAPIResponse = {
   category: string,
   description: string,
   id: number,
@@ -8,10 +8,10 @@ type FakestoreAPIResponse = {
   title: string
 }
 
-type CartItem = Omit<FakestoreAPIResponse, "category"> & { quantity: number }
+export type CartItem = Omit<FakestoreAPIResponse, "category"> & { quantity: number }
+
+export type Sort = "title" | "price" | "category" | "rating" | "purchases"
 
 type Prettify<T> = {
   [K in keyof T]: T[K];
 } & {};
-
-export type {FakestoreAPIResponse, CartItem};
