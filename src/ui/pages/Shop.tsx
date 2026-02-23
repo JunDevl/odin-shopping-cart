@@ -1,8 +1,11 @@
-import { useOutletContext } from "react-router";
-import { Suspense, useEffect, useState } from "react";
-import { formatCurrency, sortByProperty } from "../../utils";
 import "./pages.css";
 
+import { Suspense, useState } from "react";
+import { useOutletContext } from "react-router";
+
+import SpinBox from "../components/spinbox/SpinBox";
+
+import { formatCurrency, sortByProperty } from "../../utils";
 import type { FakestoreAPIResponse, CartItem } from "../../types";
 
 const Shop = () => {
@@ -26,20 +29,17 @@ const Shop = () => {
                 <p className="rating">{item.rating.rate}</p>
                 <p className="price">{formatCurrency(item.price)}</p>
                 <div className="buy">
-                  <input 
-                    type="number" 
+                  <SpinBox 
                     name="quantity" 
                     min={0} 
-                    onInput={e => {
+                    onValueChange={(newValue) => {
                       const {category, ...newItem} = item; // newItem is just item without the category property;
                         
-                      const quantity = parseInt((e.target as HTMLInputElement).value);
-                      
-                      const productWithInterest = {quantity: isNaN(quantity) ? 0 : quantity, ...newItem};
+                      const productWithInterest = {quantity: newValue, ...newItem};
 
                       const newProducts = new Map(productsWithInterest);
 
-                      if (quantity > 0) newProducts.set(item.id, productWithInterest);
+                      if (newValue > 0) newProducts.set(item.id, productWithInterest);
                       else newProducts.delete(item.id);
 
                       setProductsWithInterest(newProducts)

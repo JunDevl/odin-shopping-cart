@@ -12,6 +12,6 @@ export type CartItem = Omit<FakestoreAPIResponse, "category"> & { quantity: numb
 
 export type Sort = "title" | "price" | "category" | "rating" | "purchases"
 
-type Prettify<T> = {
+export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & {};

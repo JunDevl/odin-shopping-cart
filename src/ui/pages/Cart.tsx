@@ -1,7 +1,8 @@
-import { useOutletContext } from "react-router";
-import { formatCurrency, sortByProperty } from "../../utils";
 import "./pages.css"
 
+import { useOutletContext } from "react-router";
+
+import { formatCurrency, sortByProperty } from "../../utils";
 import type { CartItem } from "../../types";
 
 const Cart = () => {

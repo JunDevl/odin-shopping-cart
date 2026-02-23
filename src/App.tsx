@@ -1,8 +1,10 @@
-import { Outlet, Link } from 'react-router';
-import type { CartItem, FakestoreAPIResponse, Sort } from "./types"
-import { use, useState } from 'react';
-import { fetchData } from './utils';
 import "./App.css"
+
+import { use, useState } from 'react';
+import { Outlet, Link } from 'react-router';
+
+import { fetchData } from './utils';
+import type { CartItem, FakestoreAPIResponse, Sort } from "./types"
 
 const promiseCache = new Map<string, Promise<unknown>>();
 

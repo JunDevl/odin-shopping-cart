@@ -4,7 +4,8 @@ ul {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  grid-template-rows: repeat(auto-fit, 36rem);
   gap: 2rem;
 }
 
@@ -15,11 +16,12 @@ ul {
   align-items: center;
   background-color: var(--primary-color);
   padding: 2rem 1rem;
+  box-sizing: border-box;
   border-radius: 10px;
 
   &>.img {
-    align-self: stretch;
     flex: 1;
+    display: flex;
 
     &>img {
       aspect-ratio: 1/1;
@@ -37,11 +39,24 @@ ul {
     -webkit-box-orient: vertical;
   }
 
+  &>.price {
+    font-size: 1.75rem;
+  }
+
   &>.buy {
-    overflow: hidden;
+    box-sizing: border-box;
+    align-self: stretch;
     display: flex;
-    align-items: center;
-    justify-content: center;
+
+    &>.input-wrapper {
+      flex: 1 1 auto;
+    }
+
+    &>button {
+      flex: 2 1 auto;
+      box-sizing: border-box;
+      min-width: 0;
+    }
   }
 }
 
