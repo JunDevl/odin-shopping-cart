@@ -11,11 +11,8 @@ type Props = Omit<HTMLProps<HTMLInputElement>, "type" | "value" | "onInput"> &
 const SpinBox = ({className, onValueChange, changeInterval, ...narrowedProps}: Props) => {
   const [inputValue, setInputValue] = useState(0);
 
-  type UnaryOperation = {
-    operator: "increment" | "decrement"
-    accumulator: number
-  }
-  const [unaryOperation, setUnaryOperation] = useState<UnaryOperation | null>(null);
+  type UnaryOperator = "increment" | "decrement";
+  const [unaryOperator, setUnaryOperator] = useState<UnaryOperator | null>(null);
 
   const minimumValue = isNaN(+narrowedProps.min!) ? undefined : +narrowedProps.min!;
   const maximumValue = isNaN(+narrowedProps.max!) ? undefined : +narrowedProps.max!;
@@ -23,64 +20,46 @@ const SpinBox = ({className, onValueChange, changeInterval, ...narrowedProps}: P
   const input = useRef<HTMLInputElement>(null);
 
   const valueIsLegal = (value: number): boolean => {
-    if (!minimumValue && !maximumValue) return true;
+    if (minimumValue === undefined && maximumValue === undefined) return true;
 
-    if ((minimumValue && value >= minimumValue) || 
-        (maximumValue && value <= maximumValue)) return true;
+    console.log(Boolean(value >= minimumValue!));
+    if ((value >= minimumValue!) || 
+        (value <= maximumValue!)) return true;
 
     return false;
   };
 
-  const initValueChangeTimeout = () => {
-    const timeoutID = setTimeout(() => {
-      if (unaryOperation) {
-        const {operator} = unaryOperation;
-        if (operator === "decrement") setInputValue(prev => valueIsLegal(prev--) ? prev-- : prev);
-        if (operator === "increment") setInputValue(prev => valueIsLegal(prev++) ? prev++ : prev);
-      }
-      clearTimeout(timeoutID);
-    }, changeInterval ?? 500);
+  const initUpdateInterval = (operator: UnaryOperator) => {
+    const intervalID = setInterval(() => {
+      if (operator === "decrement") setInputValue(prev => valueIsLegal(prev - 1) ? prev - 1 : prev);
+      if (operator === "increment") setInputValue(prev => valueIsLegal(prev + 1) ? prev + 1 : prev);
+    }, changeInterval ?? 250);
+
+    return intervalID;
   }
   
   useEffect(() => onValueChange(inputValue), [inputValue]);
 
   useEffect(() => {
-    const timeoutID = setTimeout(() => {
-      if (unaryOperation) {
-        const {operator, accumulator} = unaryOperation;
-        if (operator === "decrement") setInputValue(prev => valueIsLegal(prev - accumulator) ? prev - accumulator : prev);
-        if (operator === "increment") setInputValue(prev => valueIsLegal(prev + accumulator) ? prev + accumulator : prev);
-        setUnaryOperation({
-          operator: unaryOperation.operator,
-          accumulator: unaryOperation.accumulator + 1
-        })
-      }
-      clearTimeout(timeoutID);
-    }, changeInterval ?? 500);
+    if (!unaryOperator) return;
 
-    if (unaryOperation === null) {
-      clearTimeout(timeoutID)
-      return;
-    }
-
-    return () => clearTimeout(timeoutID);
-  }, [unaryOperation]);
+    const interval = initUpdateInterval(unaryOperator);
+    
+    return () => clearInterval(interval);
+  }, [unaryOperator]);
   
   return (
     <div className="input-wrapper">
-      <div 
-        className="decrement" 
+      <button 
+        className="decrement"
         onMouseDown={() => {
-          setInputValue(prev => valueIsLegal(prev--) ? prev-- : prev);
-          setUnaryOperation({
-            operator: "decrement",
-            accumulator: 1
-          });
+          setInputValue(prev => valueIsLegal(prev - 1) ? prev - 1 : prev);
+          setUnaryOperator("decrement");
         }}
-        onMouseUp={() => setUnaryOperation(null)}
+        onMouseUp={() => setUnaryOperator(null)}
       >
         &#8722;
-      </div>
+      </button>
       <input 
         {...narrowedProps}
         type="number"
@@ -95,19 +74,16 @@ const SpinBox = ({className, onValueChange, changeInterval, ...narrowedProps}: P
         ref={input}
         className={`${className ? `${className }` : ""}spinbox`}
       />
-      <div 
+      <button 
         className="increment" 
         onMouseDown={() => {
-          setInputValue(prev => valueIsLegal(prev++) ? prev++ : prev);
-          setUnaryOperation({
-            operator: "increment",
-            accumulator: 1
-          });
+          setInputValue(prev => valueIsLegal(prev + 1) ? prev + 1 : prev);
+          setUnaryOperator("increment");
         }}
-        onMouseUp={() => setUnaryOperation(null)}  
+        onMouseUp={() => setUnaryOperator(null)}  
       >
         &#43;
-      </div>
+      </button>
     </div>
   )
 }
