@@ -27,6 +27,7 @@ const Cart = () => {
               <SpinBox 
                 name="quantity"
                 min={1}
+                value={item.quantity}
                 onValueChange={(newValue) => {
                   const index = cart.findIndex(cartItem => cartItem.id === item.id);
 
