@@ -58,6 +58,7 @@ const App = () => {
             <svg 
               viewBox="0 0 24 24" 
               fill="currentColor"
+              stroke="transparent"
               xmlns="http://www.w3.org/2000/svg" 
               className="icon"
             >
@@ -77,7 +78,8 @@ const App = () => {
             {/* Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools. Credits to: https://www.svgrepo.com/svg/533028/bag-shopping */}
             <svg 
               viewBox="0 0 24 24" 
-              stroke="currentColor" 
+              stroke="currentColor"
+              fill="transparent"
               xmlns="http://www.w3.org/2000/svg"
               className="icon"
             >

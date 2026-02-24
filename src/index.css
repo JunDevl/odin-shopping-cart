@@ -10,9 +10,9 @@
   --white-1: oklch(from var(--primary-color) 99% 0.025 h);
   --white-2: oklch(from var(--primary-color) 98% 0.025 h);
 
-  --black-1: oklch(from var(--primary-color) 6% 0.025 h);
-  --black-2: oklch(from var(--primary-color) 12% 0.025 h);
-  --black-3: oklch(from var(--primary-color) 20% 0.025 h);
+  --black-1: oklch(from var(--primary-color) 6% 0.015 h);
+  --black-2: oklch(from var(--primary-color) 16% 0.015 h);
+  --black-3: oklch(from var(--primary-color) 26% 0.015 h);
 
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

@@ -5,7 +5,7 @@ ul {
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
-  grid-template-rows: repeat(auto-fit, 36rem);
+  grid-template-rows: repeat(auto-fit, 40rem);
   gap: 2rem;
 }
 
@@ -15,9 +15,9 @@ ul {
   justify-content: end;
   align-items: center;
   background-color: var(--primary-color);
-  padding: 2rem 1rem;
+  padding: 2rem 1.5rem;
   box-sizing: border-box;
-  border-radius: 10px;
+  border-radius: 2rem;
 
   &>.img {
     flex: 1;
