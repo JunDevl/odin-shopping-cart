@@ -13,7 +13,9 @@
 }
 
 header {
+  padding: 1rem;
   margin-bottom: 20rem;
+  height: 2.75rem;
 }
 
 main {
@@ -24,8 +26,11 @@ main {
 
 .search {
   display: flex;
+  justify-content: center;
+  gap: 0.5rem;
 
   &>.search-icon {
+    width: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,16 +45,45 @@ main {
   display: flex;
   justify-content: center;
   gap: 5rem;
+  flex: 1;
 
   &>a {
     transition: border-color 0.25s;
     border: 1px solid transparent;
+    display: flex;
 
     &:hover {
       border-color: var(--primary-light);
       color: var(--primary-light);
     }
+
+    &.cart-icon {
+      position: relative;
+
+      &>span {
+        box-sizing: border-box;
+        width: 50%;
+        height: 50%;
+        position: absolute;
+        top: -7px;
+        right: -7px;
+        color: white;
+        background-color: var(--primary-color);
+        border-radius: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.75rem;
+        font-weight: bolder;
+      }
+    }
   }
+}
+
+.icon {
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 1/1;
 }
 
 @media (prefers-color-scheme: light) {

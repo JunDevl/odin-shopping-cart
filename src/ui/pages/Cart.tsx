@@ -2,6 +2,8 @@ import "./pages.css"
 
 import { useOutletContext } from "react-router";
 
+import SpinBox from "../components/spinbox/SpinBox";
+
 import { formatCurrency, sortByProperty } from "../../utils";
 import type { CartItem } from "../../types";
 
@@ -22,16 +24,15 @@ const Cart = () => {
               {item.title}
             </div>
             <div className="quantity">
-              <input 
-                type="number" 
-                name="quantity" 
-                value={item.quantity} 
-                onInput={e => {
+              <SpinBox 
+                name="quantity"
+                min={1}
+                onValueChange={(newValue) => {
                   const index = cart.findIndex(cartItem => cartItem.id === item.id);
 
                   const newCart = [...cart]
 
-                  newCart[index].quantity = parseInt((e.target as HTMLInputElement).value);
+                  newCart[index].quantity = newValue;
 
                   setCart(newCart);
                 }}

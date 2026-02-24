@@ -47,6 +47,10 @@ ul {
     box-sizing: border-box;
     align-self: stretch;
     display: flex;
+    background-color: brown;
+    padding: 0.5rem;
+    border-radius: 10px;
+    gap: 1rem;
 
     &>.input-wrapper {
       flex: 1 1 auto;

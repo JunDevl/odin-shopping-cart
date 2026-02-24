@@ -2,14 +2,14 @@ import "./spinbox.css"
 
 import { useRef, useState, useEffect, type HTMLProps } from "react";
 
-type Props = Omit<HTMLProps<HTMLInputElement>, "type" | "value" | "onInput"> &
+type Props = Omit<HTMLProps<HTMLInputElement>, "type" | "onInput"> &
   {
     onValueChange: (newValue: number) => void,
     changeInterval?: number // ms
   }
 
-const SpinBox = ({className, onValueChange, changeInterval, ...narrowedProps}: Props) => {
-  const [inputValue, setInputValue] = useState(0);
+const SpinBox = ({className, value, onValueChange, changeInterval, ...narrowedProps}: Props) => {
+  const [inputValue, setInputValue] = useState(typeof value === "number" ? value : 0);
 
   type UnaryOperator = "increment" | "decrement";
   const [unaryOperator, setUnaryOperator] = useState<UnaryOperator | null>(null);
@@ -33,7 +33,7 @@ const SpinBox = ({className, onValueChange, changeInterval, ...narrowedProps}: P
     const intervalID = setInterval(() => {
       if (operator === "decrement") setInputValue(prev => valueIsLegal(prev - 1) ? prev - 1 : prev);
       if (operator === "increment") setInputValue(prev => valueIsLegal(prev + 1) ? prev + 1 : prev);
-    }, changeInterval ?? 250);
+    }, changeInterval ?? 200);
 
     return intervalID;
   }
